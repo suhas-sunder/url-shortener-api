@@ -8,3 +8,54 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.title {
+  margin: 0 0 2rem 0;
+  text-transform: uppercase;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+}
+
+.table thead tr {
+  background-color: #009879;
+  color: white;
+  text-align: left;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  font-size: 1.2rem;
+}
+
+.btn {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: #009879;
+  color: white;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  background-color: white;
+  color: #009879;
+  cursor: pointer;
+}
+
+.alert {
+  color: #009879;
+  font-weight: bold;
+}
+
+.searchbar {
+  display: flex;
+  gap: 1rem;
+}

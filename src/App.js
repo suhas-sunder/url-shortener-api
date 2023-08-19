@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 function App() {
   const [links, setLinks] = useState([]);
   const [isFocused, setIsFocused] = useState("default");
-  const [err, setErr] = useState("");
+  const [alert, setAlert] = useState("");
   const inputRef = useRef("");
 
   const handleShortener = () => {
@@ -26,7 +26,7 @@ function App() {
                 },
               ]);
             } else {
-              setErr(`${data.error.split(",")[0]}, please try again!`);
+              setAlert(`${data.error.split(",")[0]}, please try again!`);
             }
           });
       } catch {
@@ -43,6 +43,7 @@ function App() {
   const handleCopy = async (url) => {
     try {
       await navigator.clipboard.writeText(url);
+      setAlert("Content copied to clipboard");
       console.log("Content copied to clipboard");
     } catch (err) {
       console.error("Failed to copy: ", err);
@@ -55,32 +56,34 @@ function App() {
     const inputValue = inputRef.current.value;
     if (isFocused === "false") {
       if (inputValue === "") {
-        setErr("Please enter a valid URL");
+        setAlert("Please enter a valid URL");
       }
     } else {
-      setErr(""); //Reset error msg onBlur
+      setAlert(""); //Reset error msg onBlur
     }
   }, [isFocused]);
 
   return (
     <div className="wrapper">
-      <h1>URL Shortener</h1>
-      <div>
+      <h1 className="title">URL Shortener</h1>
+      <div className="searchbar">
         <input
           ref={inputRef}
           placeholder="Enter URL"
           onFocus={() => setIsFocused("true")}
           onBlur={() => setIsFocused("false")}
         ></input>
-        <button onClick={handleShortener}>Shorten</button>
+        <button className="btn" onClick={handleShortener}>Shorten</button>
       </div>
-      <p>{err}</p>
+      {alert && <p className="alert">*{alert}*</p>}
       {links.length > 0 && (
-        <table>
+        <table className="table">
           <thead>
             <tr>
               <td>Original</td>
               <td>Short</td>
+              <td></td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -89,8 +92,20 @@ function App() {
                 <td>{link.original}</td>
                 <td>{link.short}</td>
                 <td>
-                  <button onClick={() => handleCopy(link.short)}>Copy</button>
-                  <button onClick={() => handleDeleteURL(link.id)}>X</button>
+                  <button
+                    className="btn"
+                    onClick={() => handleCopy(link.short)}
+                  >
+                    Copy
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn"
+                    onClick={() => handleDeleteURL(link.id)}
+                  >
+                    X
+                  </button>
                 </td>
               </tr>
             ))}
